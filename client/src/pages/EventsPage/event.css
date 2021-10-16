@@ -1,0 +1,39 @@
+label#thumbnail {
+    margin-bottom: 20px;
+    border: 1px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+}
+
+label#thumbnail input {
+    display: none;
+}
+
+label#thumbnail.has-thumbnail {
+    border: 0;
+}
+
+label#thumbnail.has-thumbnail img {
+    display: none;
+}
+
+.container .event-validation {
+    margin-top: 12px;
+}
+
+.container .input-group .form-group {
+    margin: 0.6em 0;
+}
+
+.container .input-group .btn-group {
+    width: 100%;
+}
+
+.container .input-group .secondary-button {
+    margin: 0.6em 0;
+}
