@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import api from "../../Services/api";
 import { Alert, Button, Container, Form, FormGroup, Input } from "reactstrap";
 import { RouteComponentProps } from "react-router";
+import { UserContext } from "../../user-context";
 
 const Register: React.FC<RouteComponentProps> = ({ history }) => {
+    const { setIsLoggedIn } = useContext(UserContext);
+
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
@@ -26,6 +29,7 @@ const Register: React.FC<RouteComponentProps> = ({ history }) => {
             if (user && user_id) {
                 localStorage.setItem("user", user);
                 localStorage.setItem("user_id", user_id);
+                setIsLoggedIn(true);
                 history.push("/");
             } else {
                 const message = response.data.message;

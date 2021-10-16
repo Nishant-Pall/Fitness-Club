@@ -80,12 +80,6 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
         }
     };
 
-    const logoutHandler = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("user_id");
-        history.push("/login");
-    };
-
     const registrationRequestHandler = async (event: any) => {
         try {
             await api.post(`/registration/${event.id}`, {}, { headers: { user } });
@@ -144,14 +138,6 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
                     </Button>
                     <Button color="primary" onClick={() => filterHandler("swimming")} active={rSelected === "swimming"}>
                         Swimming
-                    </Button>
-                </ButtonGroup>
-                <ButtonGroup>
-                    <Button color="secondary" onClick={() => history.push("events")}>
-                        Create Event
-                    </Button>
-                    <Button color="danger" onClick={logoutHandler}>
-                        Logout
                     </Button>
                 </ButtonGroup>
             </div>
