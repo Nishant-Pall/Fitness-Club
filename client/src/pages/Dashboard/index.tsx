@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import api from "../../Services/api";
 import moment from "moment";
-import { Alert, Button, ButtonGroup } from "reactstrap";
+import { Alert, Button, ButtonGroup, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { RouteComponentProps } from "react-router";
 import socketio from "socket.io-client";
 import "./dashboard.css";
@@ -14,6 +14,11 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
     const [error, setError] = useState(false);
     const [messageHandler, setMessageHandler] = useState("");
     const [eventsRequest, setEventsRequest] = useState<any>([]);
+    const [dropDownOpen, setDropDownOpen] = useState(false);
+
+    const toggle = () => {
+        setDropDownOpen(!dropDownOpen);
+    };
 
     const user: any = localStorage.getItem("user");
     const user_id: any = localStorage.getItem("user_id");
@@ -123,23 +128,28 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
                 })}
             </ul>
             <div className="filter-panel">
-                <ButtonGroup>
-                    <Button color="primary" onClick={() => filterHandler("")} active={rSelected === ""}>
-                        All sports
-                    </Button>
-                    <Button color="primary" onClick={myEventsHandler} active={rSelected === "myevents"}>
-                        My Events
-                    </Button>
-                    <Button color="primary" onClick={() => filterHandler("running")} active={rSelected === "running"}>
-                        Running
-                    </Button>
-                    <Button color="primary" onClick={() => filterHandler("cycling")} active={rSelected === "cycling"}>
-                        Cycling
-                    </Button>
-                    <Button color="primary" onClick={() => filterHandler("swimming")} active={rSelected === "swimming"}>
-                        Swimming
-                    </Button>
-                </ButtonGroup>
+                <Dropdown isOpen={dropDownOpen} toggle={toggle}>
+                    <DropdownToggle color="primary" caret>
+                        Filter
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem onClick={() => filterHandler("")} active={rSelected === ""}>
+                            All Sports
+                        </DropdownItem>
+                        <DropdownItem onClick={myEventsHandler} active={rSelected === "myevents"}>
+                            My Events
+                        </DropdownItem>
+                        <DropdownItem onClick={() => filterHandler("running")} active={rSelected === "running"}>
+                            Running
+                        </DropdownItem>
+                        <DropdownItem onClick={() => filterHandler("cycling")} active={rSelected === "cycling"}>
+                            Cycling
+                        </DropdownItem>
+                        <DropdownItem onClick={() => filterHandler("swimming")} active={rSelected === "swimming"}>
+                            Swimming
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
             </div>
             <ul className="events-list">
                 {events.map((event: AxiosResponse["data"] | any) => (
