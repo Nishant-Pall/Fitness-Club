@@ -30,6 +30,9 @@ const TopNav: React.FC = () => {
                         <NavItem>
                             <Link to="/">Dashboard</Link>
                         </NavItem>
+                        <NavItem>
+                            <Link to="/myregistrations">My Registerations</Link>
+                        </NavItem>
                     </Nav>
                 </Collapse>
             </Navbar>
