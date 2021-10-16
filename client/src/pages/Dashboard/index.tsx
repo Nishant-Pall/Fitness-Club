@@ -105,6 +105,28 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
         }
     };
 
+    const acceptEventHandler = async (eventId: any) => {
+        try {
+            await api.post(`/registration/${eventId}/approvals`, {}, { headers: { user } });
+            removeNotificationFromDashboard(eventId);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const rejectEventHandler = async (eventId: any) => {
+        try {
+            await api.post(`/registration/${eventId}/rejections`, {}, { headers: { user } });
+            removeNotificationFromDashboard(eventId);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const removeNotificationFromDashboard = (eventId: any) => {
+        const newEvents = eventsRequest.filter((event: any) => event._id !== eventId);
+        setEventsRequest(newEvents);
+    };
+
     return (
         <div>
             <ul className="notifications">
@@ -116,10 +138,20 @@ const Dashboard: React.FC<RouteComponentProps> = ({ history }) => {
                                 <strong>{request.event.title}</strong>
                             </div>
                             <ButtonGroup>
-                                <Button color="secondary" onClick={() => {}}>
+                                <Button
+                                    color="secondary"
+                                    onClick={() => {
+                                        acceptEventHandler(request._id);
+                                    }}
+                                >
                                     Approve
                                 </Button>
-                                <Button color="danger" onClick={() => {}}>
+                                <Button
+                                    color="danger"
+                                    onClick={() => {
+                                        rejectEventHandler(request._id);
+                                    }}
+                                >
                                     Reject
                                 </Button>
                             </ButtonGroup>
